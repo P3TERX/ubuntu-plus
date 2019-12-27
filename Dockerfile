@@ -1,4 +1,5 @@
 #=================================================
+# https://github.com/P3TERX/ubuntu-plus
 # Description: Ubuntu image with some extra packages
 # Lisence: MIT
 # Author: P3TERX
@@ -9,21 +10,20 @@ FROM ubuntu:${IMAGE_TAG:-latest}
 
 LABEL maintainer P3TERX
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Shanghai \
+    LANG=C.UTF-8
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y git wget curl vim nano htop tmux tree sudo ca-certificates zsh command-not-found uuid-runtime tzdata openssh-server && \
+RUN apt-get update -qq && apt-get upgrade -qqy && \
+    apt-get install -qqy git wget curl vim nano htop tmux tree sudo ca-certificates zsh command-not-found uuid-runtime tzdata openssh-server && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     mkdir /var/run/sshd && \
-    useradd -m -s /usr/bin/zsh user && \
+    useradd -m -G sudo -s /usr/bin/zsh user && \
     echo 'user:user' | chpasswd && \
     echo 'user ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/user && \
     chmod 440 /etc/sudoers.d/user && \
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    curl -fsSL https://raw.githubusercontent.com/cjbassi/gotop/master/scripts/download.sh | bash && \
-    mv gotop /usr/local/bin && \
-    chmod +x /usr/local/bin/gotop
+    curl -fsSL git.io/gotop.sh | bash
 
 USER user
 WORKDIR /home/user
@@ -35,9 +35,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
     echo "autoload -U compinit && compinit" >> .zshrc && \
     sed -i '/^ZSH_THEME=/c\ZSH_THEME="ys"' .zshrc && \
     sed -i '/^plugins=/c\plugins=(git sudo z command-not-found zsh-syntax-highlighting zsh-autosuggestions zsh-completions)' .zshrc && \
-    git clone https://github.com/gpakosz/.tmux.git && \
-    ln -s -f .tmux/.tmux.conf && \
-    cp .tmux/.tmux.conf.local . && \
+    curl -fsSL git.io/oh-my-tmux.sh | bash && \
     mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh
 
