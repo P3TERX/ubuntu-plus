@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8
 
 RUN apt-get update -qq && apt-get upgrade -qqy && \
-    apt-get install -qqy git wget curl vim nano htop tmux tree sudo ca-certificates zsh command-not-found uuid-runtime tzdata openssh-server lrzsz && \
+    apt-get install -qqy git wget curl vim nano htop tmux tree sudo ca-certificates zsh command-not-found uuid-runtime tzdata openssh-server lrzsz xz-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     mkdir /var/run/sshd && \
@@ -23,7 +23,8 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
     echo 'user:user' | chpasswd && \
     echo 'user ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/user && \
     chmod 440 /etc/sudoers.d/user && \
-    curl -fsSL git.io/gotop.sh | bash
+    curl -fsSL git.io/gotop.sh | bash && \
+    curl -fsSL git.io/tmate.sh | bash
 
 USER user
 WORKDIR /home/user
