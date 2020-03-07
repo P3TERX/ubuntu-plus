@@ -1,10 +1,10 @@
-#=================================================
+#===================================================
 # https://github.com/P3TERX/ubuntu-plus
 # Description: Ubuntu image with some extra packages
 # Lisence: MIT
 # Author: P3TERX
 # Blog: https://p3terx.com
-#=================================================
+#===================================================
 ARG IMAGE_TAG=latest
 FROM ubuntu:$IMAGE_TAG
 
@@ -29,16 +29,13 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
 USER user
 WORKDIR /home/user
 
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended && \
-    git clone git://github.com/zsh-users/zsh-syntax-highlighting .oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
-    git clone git://github.com/zsh-users/zsh-autosuggestions .oh-my-zsh/custom/plugins/zsh-autosuggestions && \
-    git clone https://github.com/zsh-users/zsh-completions .oh-my-zsh/custom/plugins/zsh-completions && \
-    echo "autoload -U compinit && compinit" >> .zshrc && \
-    sed -i '/^ZSH_THEME=/c\ZSH_THEME="ys"' .zshrc && \
-    sed -i '/^plugins=/c\plugins=(git sudo z command-not-found zsh-syntax-highlighting zsh-autosuggestions zsh-completions)' .zshrc && \
+RUN mkdir -p ~/.antigen && \
+    curl -fsSL git.io/antigen > ~/.antigen/antigen.zsh && \
+    curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.zshrc > ~/.zshrc && \
     curl -fsSL git.io/oh-my-tmux.sh | bash && \
     mkdir -p ~/.ssh && \
-    chmod 700 ~/.ssh
+    chmod 700 ~/.ssh && \
+    zsh ~/.zshrc
 
 EXPOSE 22
 
