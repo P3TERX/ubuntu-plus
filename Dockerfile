@@ -10,9 +10,7 @@ FROM ubuntu:$IMAGE_TAG
 
 LABEL maintainer P3TERX
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    TZ=Asia/Shanghai \
-    LANG=C.UTF-8
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq && apt-get upgrade -qqy && \
     apt-get install -qqy git wget curl vim nano htop tmux tree sudo ca-certificates zsh command-not-found uuid-runtime tzdata openssh-server lrzsz xz-utils && \
@@ -33,6 +31,9 @@ RUN mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
     curl -fsSL git.io/oh-my-zsh.sh | bash && \
     curl -fsSL git.io/oh-my-tmux.sh | bash
+
+ENV TZ=Asia/Shanghai \
+    LANG=C.UTF-8
 
 EXPOSE 22
 
