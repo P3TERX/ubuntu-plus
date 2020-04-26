@@ -29,13 +29,10 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
 USER user
 WORKDIR /home/user
 
-RUN mkdir -p ~/.antigen && \
-    curl -fsSL git.io/antigen > ~/.antigen/antigen.zsh && \
-    curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.zshrc > ~/.zshrc && \
-    curl -fsSL git.io/oh-my-tmux.sh | bash && \
-    mkdir -p ~/.ssh && \
+RUN mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
-    zsh ~/.zshrc
+    curl -fsSL git.io/oh-my-zsh.sh | bash && \
+    curl -fsSL git.io/oh-my-tmux.sh | bash
 
 EXPOSE 22
 
