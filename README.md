@@ -1,10 +1,10 @@
 # ubuntu-plus
 
-[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=LICENSE)](https://github.com/P3TERX/ubuntu-plus/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=License)](https://github.com/P3TERX/ubuntu-plus/blob/master/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/P3TERX/ubuntu-plus.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/ubuntu-plus/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/P3TERX/ubuntu-plus.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/ubuntu-plus/fork)
-[![Docker Stars](https://img.shields.io/docker/stars/p3terx/ubuntu-plus.svg?style=flat-square&label=Docker%20Stars&logo=docker)](https://hub.docker.com/r/p3terx/ubuntu-plus)
-[![Docker Pulls](https://img.shields.io/docker/pulls/p3terx/ubuntu-plus.svg?style=flat-square&label=Docker%20Pulls&logo=docker&color=orange)](https://hub.docker.com/r/p3terx/ubuntu-plus)
+[![Docker Stars](https://img.shields.io/docker/stars/p3terx/ubuntu-plus.svg?style=flat-square&label=Stars&logo=docker)](https://hub.docker.com/r/p3terx/ubuntu-plus)
+[![Docker Pulls](https://img.shields.io/docker/pulls/p3terx/ubuntu-plus.svg?style=flat-square&label=Pulls&logo=docker&color=orange)](https://hub.docker.com/r/p3terx/ubuntu-plus)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/P3TERX/ubuntu-plus/Docker%20images%20publish?label=Actions&logo=github&style=flat-square)
 
 Ubuntu image with some extra packages
