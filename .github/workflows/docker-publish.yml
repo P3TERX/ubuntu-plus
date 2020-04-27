@@ -8,8 +8,8 @@
 name: Docker images publish
 
 on:
-  release:
-    types: published
+  repository_dispatch:
+    types: [Manual*, Auto* ,test]
   push:
     paths:
       - 'Dockerfile'
@@ -31,13 +31,11 @@ jobs:
 
     - name: Install buildx
       run: |
-        curl -s https://api.github.com/repos/docker/buildx/releases/latest \
-        | grep "browser_download_url.*buildx-*.*linux-amd64" \
-        | cut -d : -f 2,3 \
-        | tr -d \" \
-        | wget -qi -
-        mkdir -p ~/.docker/cli-plugins/
-        mv buildx* ~/.docker/cli-plugins/docker-buildx
+        mkdir -vp ~/.docker/cli-plugins/
+        wget -nv -O- https://api.github.com/repos/docker/buildx/releases/latest \
+        | grep "browser_download_url.*linux-amd64\"" \
+        | cut -d '"' -f 4 \
+        | wget -nv -O ~/.docker/cli-plugins/docker-buildx -i-
         chmod +x ~/.docker/cli-plugins/docker-buildx
 
     - name: Set up buildx
@@ -55,7 +53,7 @@ jobs:
 
     - name: Build and push
       env:
-        PLATFORMS: linux/amd64
+        PLATFORMS: linux/amd64,linux/arm64/v8
         IMAGE_NAME: p3terx/ubuntu-plus
         IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
         DOCKERFILE: Dockerfile
@@ -67,3 +65,17 @@ jobs:
           -t ${IMAGE_NAME}:${IMAGE_TAG} \
           -f ${DOCKERFILE} \
           ${FILE_PATH}
+
+  tigger:
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+    - name: Trigger other image builds
+      if: (!contains(github.event.action, 'test'))
+      env:
+        ACTIONS_TRIGGER_TOKEN: ${{ secrets.ACTIONS_TRIGGER }}
+        REPO_NAME: P3TERX/openwrt-build-env
+        TRIGGER_KEYWORDS: 'Auto trigger'
+      run: |
+        sh <(curl -fsSL git.io/trigger.sh) "$ACTIONS_TRIGGER_TOKEN" "$REPO_NAME" "$TRIGGER_KEYWORDS"
