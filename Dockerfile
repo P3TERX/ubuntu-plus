@@ -21,8 +21,9 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
     echo 'user:user' | chpasswd && \
     echo 'user ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/user && \
     chmod 440 /etc/sudoers.d/user && \
-    curl -fsSL git.io/gotop.sh | bash && \
-    curl -fsSL git.io/tmate.sh | bash
+    curl -fsSL git.io/tmate.sh | bash && \
+    curl -fsSL git.io/gotop.sh | bash -s install && \
+    curl -fsSL git.io/bashtop.sh | bash -s install
 
 USER user
 WORKDIR /home/user
